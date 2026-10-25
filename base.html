@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}AuraNest — Elegant Spaces, Beautiful Living{% endblock %}</title>
+  <meta name="description" content="{% block description %}AuraNest curates refined furniture, lighting, and decor and offers bespoke interior styling to help you create calm, elegant spaces.{% endblock %}">
+  <meta name="theme-color" content="#f6f2ea">
+  <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..500&family=Jost:wght@300..600&display=swap">
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="/">AuraNest</a>
+
+      <nav class="nav-desktop" aria-label="Main">
+        <a href="/#collections" {% if page == 'home' %}aria-current="page"{% endif %}>Collections</a>
+        <a href="/#styling">Styling</a>
+        <a href="/shop" {% if page == 'shop' %}aria-current="page"{% endif %}>Shop</a>
+        <a href="/#story">Our Story</a>
+      </nav>
+
+      <div class="header-right">
+        <a class="cart-link" href="/cart" {% if page == 'cart' %}aria-current="page"{% endif %}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/>
+          </svg>
+          <span class="visually-hidden">Cart</span>
+          <span class="cart-badge" data-cart-count {% if not cart_count %}hidden{% endif %}>{{ cart_count }}</span>
+        </a>
+
+        <div class="header-cta">
+          <a class="btn" href="/book">Book a Consultation</a>
+        </div>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu" data-nav-toggle>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <nav class="nav-mobile" id="mobile-nav" aria-label="Mobile" hidden data-mobile-nav>
+      <a href="/#collections">Collections</a>
+      <a href="/#styling">Styling</a>
+      <a href="/shop">Shop</a>
+      <a href="/#story">Our Story</a>
+      <a href="/cart">Cart{% if cart_count %} ({{ cart_count }}){% endif %}</a>
+      <a class="btn btn--block" href="/book" style="margin-top:.75rem">Book a Consultation</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__copy">
+          <h2>Join the AuraNest circle</h2>
+          <p>Styling inspiration, early access to new pieces, and thoughtful ideas for beautiful living — delivered gently to your inbox.</p>
+
+          <form class="newsletter" data-newsletter novalidate>
+            <label class="visually-hidden" for="newsletter-email">Email address</label>
+            <input type="email" id="newsletter-email" name="email" placeholder="Your email" required autocomplete="email">
+            <button class="btn" type="submit">Subscribe</button>
+          </form>
+          <p class="form-message" data-newsletter-msg role="status" aria-live="polite"></p>
+        </div>
+
+        <nav class="footer__nav" aria-label="Footer">
+          <div>
+            <h2>Shop</h2>
+            <ul>
+              <li><a href="/shop?category=seating">Seating</a></li>
+              <li><a href="/shop?category=lighting">Lighting</a></li>
+              <li><a href="/shop?category=textiles">Textiles</a></li>
+              <li><a href="/shop">All Pieces</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Studio</h2>
+            <ul>
+              <li><a href="/#styling">Interior Styling</a></li>
+              <li><a href="/book">Consultations</a></li>
+              <li><a href="/shop">New Arrivals</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Company</h2>
+            <ul>
+              <li><a href="/#story">Our Story</a></li>
+              <li><a href="/book">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
+      <div class="footer__base">
+        <span class="footer__wordmark">AuraNest</span>
+        <p>&copy; {{ year }} AuraNest. Elegant Spaces, Beautiful Living.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="cart-toast" data-cart-toast role="status" aria-live="polite" hidden></div>
+
+  <script src="/static/js/main.js" defer></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

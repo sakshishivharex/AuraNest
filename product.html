@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }} — AuraNest{% endblock %}
+{% block description %}{{ product.name }} — {{ product.description[:150] }}{% endblock %}
+{% block content %}
+
+<div class="container">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a> <span aria-hidden="true">/</span>
+    <a href="/shop">Shop</a> <span aria-hidden="true">/</span>
+    {% if product.category %}<a href="/shop?category={{ product.category }}">{{ product.category_name }}</a> <span aria-hidden="true">/</span>{% endif %}
+    <span>{{ product.name }}</span>
+  </nav>
+</div>
+
+<section class="container product-detail">
+  <div class="product-detail__media">
+    <img src="{{ product.image }}" alt="{{ product.name }}" width="800" height="800" fetchpriority="high">
+  </div>
+
+  <div>
+    {% if product.category_name %}<span class="badge">{{ product.category_name }}</span>{% endif %}
+    <h1 class="balance" style="margin-top:1rem">{{ product.name }}</h1>
+    <p class="product-detail__price">{{ product.price }}</p>
+
+    <p class="product-detail__desc">{{ product.description }}</p>
+
+    <p style="margin-top:1.5rem">
+      {% if product.in_stock %}
+        <span class="badge badge--ok">In stock — {{ product.stock }} available</span>
+      {% else %}
+        <span class="badge badge--out">Currently unavailable</span>
+      {% endif %}
+    </p>
+
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-top:2rem">
+      <form method="post" action="/cart/add/{{ product.slug }}">
+        <input type="hidden" name="quantity" value="1">
+        <button class="btn btn--lg" type="submit" {% if not product.in_stock %}disabled{% endif %}>
+          {% if product.in_stock %}Add to cart{% else %}Currently unavailable{% endif %}
+        </button>
+      </form>
+      <a class="btn btn--lg btn--outline" href="/cart">View cart</a>
+    </div>
+    {% if product.in_stock and product.stock <= 10 %}
+      <p style="margin-top:.75rem;font-size:.875rem;color:var(--muted-foreground)">Only {{ product.stock }} left in stock.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% if related %}
+<section class="section" style="border-top:1px solid var(--border)">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">You may also like</p>
+        <h2 class="balance">More from {{ product.category_name }}</h2>
+      </div>
+    </div>
+    <div class="product-grid" style="margin-top:3rem">
+      {% for p in related %}
+      <article class="product-card">
+        <a href="/product/{{ p.slug }}">
+          <div class="product-card__media">
+            <img src="{{ p.image }}" alt="{{ p.name }}" width="600" height="600" loading="lazy">
+          </div>
+          <div class="product-card__meta">
+            <span class="product-card__name">{{ p.name }}</span>
+            <span class="product-card__price">{{ p.price }}</span>
+          </div>
+        </a>
+        <form class="product-card__action" method="post" action="/cart/add/{{ p.slug }}">
+          <button class="btn btn--sm btn--block" type="submit" {% if not p.in_stock %}disabled{% endif %}>
+            {% if p.in_stock %}Add to cart{% else %}Unavailable{% endif %}
+          </button>
+        </form>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% endblock %}

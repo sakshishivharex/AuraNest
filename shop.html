@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Shop — AuraNest{% endblock %}
+{% block description %}Browse the AuraNest collection of refined furniture, lighting, textiles, and decor.{% endblock %}
+{% block content %}
+
+<div class="container">
+  <div class="page-intro">
+    <p class="eyebrow">The Collection</p>
+    <h1 class="balance">Shop</h1>
+    <p>Furniture, lighting, and textiles chosen for how they make a room feel — warm, calm, and entirely your own.</p>
+  </div>
+
+  <nav class="filter-bar" style="margin-top:3rem" aria-label="Filter by category">
+    <a href="/shop" aria-current="{{ 'true' if active_category == 'all' else 'false' }}">All</a>
+    {% for c in collections %}
+    <a href="/shop?category={{ c.slug }}" aria-current="{{ 'true' if active_category == c.slug else 'false' }}">{{ c.name }}</a>
+    {% endfor %}
+  </nav>
+</div>
+
+<section class="section" style="padding-top:0">
+  <div class="container">
+    {% if products %}
+      <div class="product-grid">
+      {% for p in products %}
+        <article class="product-card">
+          <a href="/product/{{ p.slug }}">
+            <div class="product-card__media">
+              <img src="{{ p.image }}" alt="{{ p.name }}" width="600" height="600" loading="lazy">
+            </div>
+            <div class="product-card__meta">
+              <span class="product-card__name">{{ p.name }}</span>
+              <span class="product-card__price">{{ p.price }}</span>
+            </div>
+          </a>
+          <form class="product-card__action" method="post" action="/cart/add/{{ p.slug }}">
+            <button class="btn btn--sm btn--block" type="submit" {% if not p.in_stock %}disabled{% endif %}>
+              {% if p.in_stock %}Add to cart{% else %}Unavailable{% endif %}
+            </button>
+          </form>
+        </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">No pieces in this collection yet. <a href="/shop">Browse everything</a>.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

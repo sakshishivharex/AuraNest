@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Book a Consultation — AuraNest{% endblock %}
+{% block description %}Book a complimentary interior styling consultation with an AuraNest designer.{% endblock %}
+{% block content %}
+
+<section class="section">
+  <div class="container">
+    <div class="page-intro" style="padding-top:1rem">
+      <p class="eyebrow">Interior Styling</p>
+      <h1 class="balance">Book a consultation</h1>
+      <p>Tell us a little about your space. A designer will reach out within one business day to arrange a free first conversation.</p>
+    </div>
+
+    <div class="form-card" style="margin-top:3rem">
+      {% if error %}
+        <p class="alert alert--error" role="alert" style="margin-bottom:1.5rem">{{ error }}</p>
+      {% endif %}
+
+      <form class="form-grid" method="post" action="/book" novalidate>
+        <div class="form-row form-row--2">
+          <div class="form-field">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" required autocomplete="name" value="{{ form.get('name','') if form else '' }}">
+          </div>
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required autocomplete="email" value="{{ form.get('email','') if form else '' }}">
+          </div>
+        </div>
+
+        <div class="form-row form-row--2">
+          <div class="form-field">
+            <label for="phone">Phone <span style="font-weight:400;color:var(--muted-foreground)">(optional)</span></label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" value="{{ form.get('phone','') if form else '' }}">
+          </div>
+          <div class="form-field">
+            <label for="preferred_date">Preferred date</label>
+            <input type="date" id="preferred_date" name="preferred_date" value="{{ form.get('preferred_date','') if form else '' }}">
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="service">Service</label>
+          <select id="service" name="service">
+            <option>Full-home styling</option>
+            <option>Single-room refresh</option>
+            <option>Furniture &amp; lighting plan</option>
+            <option>Trade / design partnership</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="message">What would you like to change? <span style="font-weight:400;color:var(--muted-foreground)">(optional)</span></label>
+          <textarea id="message" name="message" rows="4" placeholder="A sunlit living room that feels calm, with room for a reading nook…"></textarea>
+        </div>
+
+        <button class="btn btn--lg btn--block" type="submit">Request my consultation</button>
+        <p style="font-size:.8rem;color:var(--muted-foreground);text-align:center">No obligation. We never share your details.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="hero" id="top">
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <p class="hero__badge">Elegant Spaces, Beautiful Living</p>
+      <h1 class="balance">Curated interiors for a calmer, more beautiful home</h1>
+      <p>AuraNest brings together timeless furniture, artisan decor, and bespoke styling — thoughtfully composed to help your space feel effortless, warm, and entirely your own.</p>
+
+      <div class="hero__actions">
+        <a class="btn btn--lg" href="#collections">
+          Explore Collections
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn--lg btn--outline" href="#styling">Book Styling</a>
+      </div>
+
+      <dl class="hero__stats">
+        <div><dt>12k+</dt><dd>Homes styled</dd></div>
+        <div><dt>450+</dt><dd>Curated pieces</dd></div>
+        <div><dt>15 yrs</dt><dd>Of craft</dd></div>
+      </dl>
+    </div>
+
+    <div class="hero__figure">
+      <div class="hero__frame">
+        <img src="/static/images/hero-living-room.png" alt="A sunlit, elegantly furnished living room with a linen sofa, boucle armchair, and olive tree" width="900" height="1125" fetchpriority="high">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="collections">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Curated Collections</p>
+        <h2 class="balance">Pieces chosen for how they make a room feel</h2>
+      </div>
+      <a class="link-more" href="/shop">
+        View all collections
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+      </a>
+    </div>
+
+    <div class="card-grid">
+      {% for c in collections %}
+      <a class="collection-card" href="/shop?category={{ c['slug'] }}">
+        <div class="collection-card__media">
+          <img src="{{ c['image'] }}" alt="{{ c['name'] }} collection" width="600" height="750" loading="lazy">
+        </div>
+        <div class="collection-card__body">
+          <div>
+            <div class="collection-card__title">
+              <h3>{{ c['name'] }}</h3>
+              <span>{{ c['item_count'] }} pieces</span>
+            </div>
+            <p>{{ c['tagline'] }}</p>
+          </div>
+          <svg class="collection-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section styling" id="styling">
+  <div class="container styling__grid">
+    <div class="styling__media">
+      <img src="/static/images/styling-service.png" alt="An interior designer's mood board with fabric swatches, wood, and stone samples" width="900" height="720" loading="lazy">
+    </div>
+
+    <div class="styling__copy">
+      <p class="eyebrow">Interior Styling</p>
+      <h2 class="balance">Bespoke styling, guided by our designers</h2>
+      <p>Whether you&rsquo;re refreshing a single room or furnishing a whole home, our styling service pairs you with a dedicated designer to bring calm, cohesive beauty to your space.</p>
+
+      <ol class="steps">
+        <li>
+          <span class="step-num" aria-hidden="true">1</span>
+          <div>
+            <h3>Discover</h3>
+            <p>We begin with a conversation about how you live, the mood you love, and the way you want each room to feel.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num" aria-hidden="true">2</span>
+          <div>
+            <h3>Compose</h3>
+            <p>Our stylists build a considered plan — layouts, palettes, and pieces drawn from our curated collection.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num" aria-hidden="true">3</span>
+          <div>
+            <h3>Transform</h3>
+            <p>We deliver, place, and style every detail, leaving you with a space that feels finished and calm.</p>
+          </div>
+        </li>
+      </ol>
+
+      <ul class="perks">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Free first consultation</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> No obligation</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Nationwide delivery</li>
+      </ul>
+
+      <a class="btn btn--lg" href="/book" style="margin-top:2rem">Book a Consultation</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="shop">
+  <div class="container">
+    <div class="shop-head">
+      <p class="eyebrow">Featured Pieces</p>
+      <h2 class="balance">Bring a little of AuraNest home</h2>
+    </div>
+
+    <div class="product-grid">
+      {% for p in products %}
+      <article class="product-card">
+        <a href="/product/{{ p.slug }}">
+          <div class="product-card__media">
+            <img src="{{ p.image }}" alt="{{ p.name }}" width="600" height="600" loading="lazy">
+          </div>
+          <div class="product-card__meta">
+            <span class="product-card__name">{{ p.name }}</span>
+            <span class="product-card__price">{{ p.price }}</span>
+          </div>
+        </a>
+        <form class="product-card__action" method="post" action="/cart/add/{{ p.slug }}">
+          <button class="btn btn--sm btn--block" type="submit" {% if not p.in_stock %}disabled{% endif %}>
+            {% if p.in_stock %}Add to cart{% else %}Unavailable{% endif %}
+          </button>
+        </form>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="testimonial" id="story">
+  <div class="container testimonial__inner">
+    <p class="eyebrow">Loved by our clients</p>
+    <blockquote class="balance">&ldquo;AuraNest understood our home before we did. Every piece feels intentional, every room feels calmer. It&rsquo;s the most at ease we&rsquo;ve ever felt in our own space.&rdquo;</blockquote>
+    <div class="byline">
+      <p>Amara &amp; Julien</p>
+      <p>Full-home styling, Portland</p>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

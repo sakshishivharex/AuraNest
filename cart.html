@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Your Cart — AuraNest{% endblock %}
+{% block description %}Review the pieces in your AuraNest cart.{% endblock %}
+{% block content %}
+
+<section class="section">
+  <div class="container">
+    <div class="page-intro" style="padding-top:1rem">
+      <p class="eyebrow">Your Selection</p>
+      <h1 class="balance">Cart{% if cart.units %} <span style="color:var(--muted-foreground)">({{ cart.units }})</span>{% endif %}</h1>
+    </div>
+
+    {# Use subscript syntax: `cart.items` would resolve to the dict.items METHOD. #}
+    {% if cart['items'] %}
+      <div class="cart-layout">
+        <div class="cart-lines">
+          {% for item in cart['items'] %}
+          <article class="cart-line" data-line="{{ item.line_id }}">
+            <a class="cart-line__media" href="/product/{{ item.slug }}">
+              <img src="{{ item.image }}" alt="{{ item.name }}" width="200" height="200" loading="lazy">
+            </a>
+
+            <div class="cart-line__info">
+              <h2 class="cart-line__name"><a href="/product/{{ item.slug }}">{{ item.name }}</a></h2>
+              <p class="cart-line__unit">{{ item.price }} each</p>
+
+              <div class="cart-line__controls">
+                <div class="qty" data-qty>
+                  <button type="button" class="qty__btn" data-qty-dec aria-label="Decrease quantity of {{ item.name }}">&minus;</button>
+                  <input class="qty__input" type="number" value="{{ item.quantity }}"
+                         min="1" max="{{ item.stock if item.stock < 10 else 10 }}"
+                         aria-label="Quantity of {{ item.name }}" data-qty-input>
+                  <button type="button" class="qty__btn" data-qty-inc aria-label="Increase quantity of {{ item.name }}">+</button>
+                </div>
+                <button type="button" class="link-remove" data-remove>Remove</button>
+              </div>
+            </div>
+
+            <p class="cart-line__total" data-line-total>{{ item.line_total }}</p>
+          </article>
+          {% endfor %}
+
+          <div class="cart-lines__actions">
+            <a class="btn btn--outline" href="/shop">Continue shopping</a>
+            <button type="button" class="link-remove" data-clear>Empty cart</button>
+          </div>
+        </div>
+
+        <aside class="cart-summary" aria-label="Order summary">
+          <h2>Summary</h2>
+          <dl class="cart-summary__rows">
+            <div><dt>Subtotal</dt><dd data-summary-subtotal>{{ cart.subtotal }}</dd></div>
+            <div><dt>Shipping</dt><dd data-summary-shipping>{{ cart.shipping }}</dd></div>
+            <div class="cart-summary__total"><dt>Total</dt><dd data-summary-total>{{ cart.total }}</dd></div>
+          </dl>
+
+          <p class="cart-summary__note" data-free-shipping-note>
+            {% if cart.amount_to_free_shipping_paise %}
+              Spend {{ cart.amount_to_free_shipping }} more for free nationwide delivery.
+            {% else %}
+              Free nationwide delivery applied.
+            {% endif %}
+          </p>
+
+          <a class="btn btn--lg btn--block" href="/book">Proceed to checkout</a>
+          <p class="cart-summary__fine">We confirm stock and delivery timing before charging anything.</p>
+        </aside>
+      </div>
+    {% else %}
+      <div class="form-card" style="text-align:center;margin-top:3rem">
+        <h2 class="balance">Your cart is empty</h2>
+        <p class="lede" style="margin:1rem auto 0">Nothing here yet. Have a look through the collection.</p>
+        <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:2rem">
+          <a class="btn" href="/shop">Browse the collection</a>
+          <a class="btn btn--outline" href="/">Back to home</a>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

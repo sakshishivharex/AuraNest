@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Consultation requested — AuraNest{% endblock %}
+{% block content %}
+
+<section class="section">
+  <div class="container">
+    <div class="form-card" style="text-align:center">
+      <div style="width:3rem;height:3rem;margin:0 auto 1.5rem;border-radius:999px;background:var(--accent);display:flex;align-items:center;justify-content:center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="oklch(0.28 0.03 145)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+      </div>
+      <h1 class="balance">Thank you — we&rsquo;ve got it.</h1>
+      <p class="lede" style="margin:1rem auto 0">
+        Your consultation request is with our studio. A designer will be in touch within one business day.
+      </p>
+      <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:2rem">
+        <a class="btn" href="/shop">Browse the collection</a>
+        <a class="btn btn--outline" href="/">Back to home</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
